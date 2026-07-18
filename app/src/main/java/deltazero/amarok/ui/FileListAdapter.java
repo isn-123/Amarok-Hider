@@ -163,6 +163,8 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }).start();
             });
 
+            fileHolder.btnSubfolders.setOnClickListener(v -> showSubfoldersDialog(currPath));
+
             fileHolder.btnDelete.setOnClickListener(v -> {
                 new MaterialAlertDialogBuilder(context)
                         .setTitle(R.string.remove_hide_path)
@@ -202,7 +204,7 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public MaterialTextView tvFolderName, tvPath;
         public LinearLayout llPathItem;
-        public MaterialButton btnVisibility, btnOpen, btnDelete;
+        public MaterialButton btnVisibility, btnOpen, btnSubfolders, btnDelete;
 
         public FileListHolder(@NonNull View itemView, FileListAdapter adapter) {
             super(itemView);
@@ -211,6 +213,7 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             llPathItem = itemView.findViewById(R.id.hideapp_ll_pathitem);
             btnVisibility = itemView.findViewById(R.id.hidefile_btn_visibility);
             btnOpen = itemView.findViewById(R.id.hidefile_btn_open);
+            btnSubfolders = itemView.findViewById(R.id.hidefile_btn_subfolders);
             btnDelete = itemView.findViewById(R.id.hidefile_btn_delete);
         }
     }
@@ -277,6 +280,174 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
 
+        }
+    }
+
+    private void showSubfoldersDialog(String parentPath) {
+        File parentDir = new File(parentPath);
+        if (!parentDir.exists() || !parentDir.isDirectory()) {
+            Toast.makeText(context, "Parent folder does not exist or is hidden itself.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // List all subdirectories
+        File[] files = parentDir.listFiles();
+        if (files == null) {
+            Toast.makeText(context, "Cannot read folder contents", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        java.util.List<SubfolderItem> subfolders = new java.util.ArrayList<>();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                String name = file.getName();
+                boolean isHidden = name.startsWith(".") && (name.endsWith("!amk") || name.endsWith("!amk1") || name.endsWith("!amk2"));
+                String displayName = name;
+                if (isHidden) {
+                    try {
+                        String base64Name = name.substring(1); // strip leading dot
+                        if (base64Name.endsWith("!amk1")) {
+                            base64Name = base64Name.substring(0, base64Name.length() - 5);
+                        } else if (base64Name.endsWith("!amk2")) {
+                            base64Name = base64Name.substring(0, base64Name.length() - 5);
+                        } else if (base64Name.endsWith("!amk")) {
+                            base64Name = base64Name.substring(0, base64Name.length() - 4);
+                        }
+                        displayName = new String(android.util.Base64.decode(base64Name, android.util.Base64.URL_SAFE | android.util.Base64.NO_WRAP | android.util.Base64.NO_PADDING), java.nio.charset.StandardCharsets.UTF_8);
+                    } catch (Exception e) {
+                        Log.w("SubfoldersDialog", "Failed to decode: " + name, e);
+                    }
+                }
+                subfolders.add(new SubfolderItem(file, displayName, isHidden));
+            }
+        }
+
+        if (subfolders.isEmpty()) {
+            Toast.makeText(context, "No subfolders found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Sort by display name
+        java.util.Collections.sort(subfolders, (a, b) -> a.displayName.compareToIgnoreCase(b.displayName));
+
+        // Create dialog views dynamically
+        LinearLayout container = new LinearLayout(context);
+        container.setOrientation(LinearLayout.VERTICAL);
+        int padding = (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 20, context.getResources().getDisplayMetrics());
+        container.setPadding(padding, padding, padding, padding);
+
+        for (SubfolderItem item : subfolders) {
+            LinearLayout row = new LinearLayout(context);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            row.setPadding(0, 0, 0, (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 16, context.getResources().getDisplayMetrics()));
+
+            // Folder Icon
+            android.widget.ImageView ivFolder = new android.widget.ImageView(context);
+            ivFolder.setImageResource(R.drawable.domino_mask_fill0_wght400_grad0_opsz24);
+            ivFolder.setImageTintList(context.getColorStateList(R.color.midnight_primary));
+            LinearLayout.LayoutParams ivParams = new LinearLayout.LayoutParams(
+                (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 24, context.getResources().getDisplayMetrics()),
+                (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 24, context.getResources().getDisplayMetrics())
+            );
+            ivParams.rightMargin = (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 12, context.getResources().getDisplayMetrics());
+            row.addView(ivFolder, ivParams);
+
+            // Text Name
+            android.widget.TextView tvName = new android.widget.TextView(context);
+            tvName.setText(item.displayName);
+            tvName.setTextSize(16);
+            tvName.setTextColor(context.getColor(R.color.midnight_on_surface));
+            LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+            row.addView(tvName, tvParams);
+
+            // Switch
+            com.google.android.material.materialswitch.MaterialSwitch swVisibility = new com.google.android.material.materialswitch.MaterialSwitch(context);
+            swVisibility.setChecked(!item.isHidden);
+            row.addView(swVisibility);
+
+            swVisibility.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (!buttonView.isPressed()) return;
+
+                swVisibility.setEnabled(false);
+
+                new Thread(() -> {
+                    try {
+                        String currentPath = item.file.getAbsolutePath();
+                        if (isChecked) {
+                            // Unhide subfolder
+                            PrefMgr.getFileHider(context).unhide(java.util.Collections.singleton(currentPath));
+                        } else {
+                            // Hide subfolder
+                            PrefMgr.getFileHider(context).hide(java.util.Collections.singleton(currentPath));
+                        }
+
+                        // Rescan the directory to update the File object mapping
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            swVisibility.setEnabled(true);
+                            File parent = new File(parentPath);
+                            File[] updatedFiles = parent.listFiles();
+                            if (updatedFiles != null) {
+                                for (File f : updatedFiles) {
+                                    String fn = f.getName();
+                                    boolean fHidden = fn.startsWith(".") && (fn.endsWith("!amk") || fn.endsWith("!amk1") || fn.endsWith("!amk2"));
+                                    String fDecrypted = fn;
+                                    if (fHidden) {
+                                        try {
+                                            String base64Name = fn.substring(1);
+                                            if (base64Name.endsWith("!amk1")) {
+                                                base64Name = base64Name.substring(0, base64Name.length() - 5);
+                                            } else if (base64Name.endsWith("!amk2")) {
+                                                base64Name = base64Name.substring(0, base64Name.length() - 5);
+                                            } else if (base64Name.endsWith("!amk")) {
+                                                base64Name = base64Name.substring(0, base64Name.length() - 4);
+                                            }
+                                            fDecrypted = new String(android.util.Base64.decode(base64Name, android.util.Base64.URL_SAFE | android.util.Base64.NO_WRAP | android.util.Base64.NO_PADDING), java.nio.charset.StandardCharsets.UTF_8);
+                                        } catch (Exception ignore) {}
+                                    }
+                                    if (fDecrypted.equals(item.displayName)) {
+                                        item.file = f;
+                                        item.isHidden = fHidden;
+                                        break;
+                                    }
+                                }
+                            }
+                            Toast.makeText(context, isChecked ? "Subfolder unhidden" : "Subfolder hidden", Toast.LENGTH_SHORT).show();
+                        });
+
+                    } catch (Exception e) {
+                        Log.e("SubfoldersDialog", "Subfolder toggle failed", e);
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            swVisibility.setEnabled(true);
+                            swVisibility.setChecked(!isChecked);
+                            Toast.makeText(context, "Operation failed", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }).start();
+            });
+
+            container.addView(row);
+        }
+
+        androidx.core.widget.NestedScrollView scrollView = new androidx.core.widget.NestedScrollView(context);
+        scrollView.addView(container);
+
+        new MaterialAlertDialogBuilder(context)
+                .setTitle("Manage Subfolders")
+                .setView(scrollView)
+                .setPositiveButton("Close", null)
+                .show();
+    }
+
+    private static class SubfolderItem {
+        File file;
+        String displayName;
+        boolean isHidden;
+
+        SubfolderItem(File file, String displayName, boolean isHidden) {
+            this.file = file;
+            this.displayName = displayName;
+            this.isHidden = isHidden;
         }
     }
 }
