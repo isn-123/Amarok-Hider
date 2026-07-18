@@ -68,11 +68,21 @@ public class PasswordAuthFragment extends BottomSheetDialogFragment {
     }
 
     private void verify() {
+        assert etPassword.getText() != null;
+        String enteredPass = etPassword.getText().toString();
+        String enteredHash = HashUtil.calculateHash(enteredPass);
+        String duressHash = PrefMgr.getDuressPasscode();
+
+        if (duressHash != null && enteredHash.equals(duressHash)) {
+            PrefMgr.executeWipe(getContext());
+            android.widget.Toast.makeText(getContext(), "Vault wiped successfully", android.widget.Toast.LENGTH_LONG).show();
+            if (onVerifiedCallback != null) onVerifiedCallback.onVerified(true);
+            dismiss();
+            return;
+        }
 
         String password = PrefMgr.getAmarokPassword();
-        assert etPassword.getText() != null;
-
-        if (password == null || HashUtil.calculateHash(etPassword.getText().toString()).equals(password)) {
+        if (password == null || enteredHash.equals(password)) {
             if (onVerifiedCallback != null) onVerifiedCallback.onVerified(true);
             dismiss();
         } else {

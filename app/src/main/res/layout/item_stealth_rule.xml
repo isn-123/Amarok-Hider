@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_rule_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/midnight_surface_container"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Icon Container (Soft Square) -->
+        <FrameLayout
+            android:id="@+id/item_rule_icon_bg"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_soft_square"
+            android:backgroundTint="#26d4bbff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/item_rule_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_null"
+                app:tint="@color/midnight_secondary" />
+
+        </FrameLayout>
+
+        <!-- Rule Text Info (Center) -->
+        <LinearLayout
+            android:id="@+id/item_rule_info_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/item_rule_time_layout"
+            app:layout_constraintStart_toEndOf="@id/item_rule_icon_bg"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/item_rule_tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rule Name"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/midnight_on_surface"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_rule_tv_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Mon, Tue, Wed, Thu, Fri"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                android:textColor="@color/midnight_on_surface_variant" />
+
+        </LinearLayout>
+
+        <!-- Time and Action info (Right) -->
+        <LinearLayout
+            android:id="@+id/item_rule_time_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/item_rule_divider"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/item_rule_tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08:00 - 17:00"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/midnight_on_surface"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_rule_tv_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Action: Force Hide"
+                android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                android:textColor="@color/midnight_secondary" />
+
+        </LinearLayout>
+
+        <!-- Divider line -->
+        <View
+            android:id="@+id/item_rule_divider"
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:background="@color/midnight_outline_variant"
+            android:alpha="0.3"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/item_rule_switch"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Toggle Switch -->
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/item_rule_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

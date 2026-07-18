@@ -1,9 +1,21 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.Amarok" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Amarok" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:windowBackground">@color/midnight_background</item>
+        <item name="colorPrimary">@color/midnight_primary</item>
+        <item name="colorOnPrimary">@color/midnight_on_primary</item>
+        <item name="colorSecondary">@color/midnight_secondary</item>
+        <item name="colorOnSecondary">@color/midnight_on_secondary</item>
+        <item name="colorSurface">@color/midnight_surface</item>
+        <item name="colorOnSurface">@color/midnight_on_surface</item>
+        <item name="colorSurfaceVariant">@color/midnight_surface_container</item>
+        <item name="colorOnSurfaceVariant">@color/midnight_on_surface_variant</item>
+        <item name="colorOutline">@color/midnight_outline</item>
+        <item name="colorOutlineVariant">@color/midnight_outline_variant</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
     </style>
 

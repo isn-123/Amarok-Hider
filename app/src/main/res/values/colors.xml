@@ -15,4 +15,19 @@
     <color name="calendar_white_light">#4DFFFFFF</color>
     <color name="calendar_white">#D9FFFFFF</color>
     <color name="calendar_spotlight_bg">#00000099</color>
+
+    <!-- Midnight Professional Palette -->
+    <color name="midnight_background">#141315</color>
+    <color name="midnight_surface">#141315</color>
+    <color name="midnight_surface_container">#201f21</color>
+    <color name="midnight_surface_container_high">#2b292c</color>
+    <color name="midnight_surface_container_low">#1c1b1d</color>
+    <color name="midnight_primary">#ede1ff</color>
+    <color name="midnight_on_primary">#342c49</color>
+    <color name="midnight_secondary">#d4bbff</color>
+    <color name="midnight_on_secondary">#3f0f81</color>
+    <color name="midnight_on_surface">#e6e1e4</color>
+    <color name="midnight_on_surface_variant">#cac4cd</color>
+    <color name="midnight_outline">#948f97</color>
+    <color name="midnight_outline_variant">#49454d</color>
 </resources>

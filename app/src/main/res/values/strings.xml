@@ -215,4 +215,17 @@
     <string name="hide_from_recents_description">Hide Amarok from the recent apps screen.</string>
     <string name="hide_amarok_icon_dialog_title">Hide Amarok Icon</string>
     <string name="hide_amarok_icon_dialog_message">This option will hide Amarok from the launcher. You can dial *#*#262765#*#*  (262765 spells \"amarok\" on T9 keypad) to access Amarok again.</string>
+
+    <!-- Stealth Scheduling -->
+    <string name="stealth_scheduling">Stealth Scheduling</string>
+    <string name="stealth_scheduling_description">Automatically hide or unhide files/apps based on daily schedule.</string>
+    <string name="add_rule">Create New Rule</string>
+    <string name="rule_name">Rule Name</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="days_of_week">Days of Week</string>
+    <string name="rule_enabled">Enabled</string>
+    <string name="priority">Priority</string>
+    <string name="save_rule">Save Rule</string>
+    <string name="delete_rule">Delete Rule</string>
 </resources>

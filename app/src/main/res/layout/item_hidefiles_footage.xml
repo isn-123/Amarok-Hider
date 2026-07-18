@@ -6,26 +6,30 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Material3.Button.TextButton.Icon"
+        style="@style/Widget.Material3.Button"
         android:id="@+id/hidefiles_bt_add_folder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="0dp"
-        android:layout_marginVertical="10dp"
-        android:gravity="start|center"
-        android:onClick="addHideFolder"
-        android:paddingHorizontal="40dp"
-        android:paddingVertical="15dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="12dp"
+        android:gravity="center"
+        android:paddingVertical="12dp"
         android:text="@string/add_hide_files"
-        app:icon="@drawable/ic_add" />
+        android:onClick="addHideFolder"
+        app:backgroundTint="@color/midnight_secondary"
+        android:textColor="@color/midnight_on_secondary"
+        app:iconTint="@color/midnight_on_secondary"
+        app:icon="@drawable/ic_add"
+        app:cornerRadius="12dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:text="@string/folder_selector_hints"
+        android:textColor="@color/midnight_on_surface_variant"
         android:textSize="11sp" />
 
 </LinearLayout>

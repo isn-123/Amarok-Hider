@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/midnight_background"
     tools:context=".ui.settings.SwitchAppHiderActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -17,217 +18,292 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="?attr/colorOnSurface"
-            app:title="@string/switch_app_hider" />
+            app:navigationIconTint="@color/midnight_on_surface"
+            app:title="@string/switch_app_hider"
+            app:titleTextColor="@color/midnight_on_surface" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="8dp"
             android:orientation="vertical">
 
-
-            <LinearLayout
+            <!-- None Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_apphider_radio_disabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckAppHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_apphider_radio_disabled"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/apphider_none" />
+                        android:onClick="onCheckAppHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/apphider_none_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apphider_none"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/apphider_none_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <!-- Root Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_apphider_radio_root"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckAppHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_apphider_radio_root"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/apphider_root" />
+                        android:onClick="onCheckAppHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/apphider_root_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apphider_root"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/apphider_root_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-
-            <LinearLayout
+            <!-- Shizuku Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_apphider_radio_shizuku"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckAppHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_apphider_radio_shizuku"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/apphider_shizuku" />
+                        android:onClick="onCheckAppHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/apphider_shizuku_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apphider_shizuku"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/apphider_shizuku_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <!-- Dhizuku Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_apphider_radio_dhizuku"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckAppHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_apphider_radio_dhizuku"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/apphider_dhizuku" />
+                        android:onClick="onCheckAppHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/apphider_dhizuku_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apphider_dhizuku"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/apphider_dhizuku_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <!-- DSM Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_apphider_radio_dsm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckAppHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_apphider_radio_dsm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/apphider_dsm" />
+                        android:onClick="onCheckAppHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/apphider_dsm_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apphider_dsm"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/apphider_dsm_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+            <!-- Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:layout_marginVertical="28dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="24dp"
                 android:gravity="end"
                 android:orientation="horizontal">
-
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/switch_apphider_bt_learn_more"
@@ -236,19 +312,23 @@
                     android:layout_height="wrap_content"
                     android:onClick="onClickLearnMoreButton"
                     android:text="@string/learn_more"
-                    app:icon="@drawable/ic_open" />
+                    android:textColor="@color/midnight_secondary"
+                    app:icon="@drawable/ic_open"
+                    app:iconTint="@color/midnight_secondary" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/switch_apphider_bt_ok"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     android:onClick="onClickOKButton"
-                    android:text="@string/ok" />
+                    android:text="@string/ok"
+                    app:backgroundTint="@color/midnight_secondary"
+                    android:textColor="@color/midnight_on_secondary"
+                    app:cornerRadius="8dp" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 

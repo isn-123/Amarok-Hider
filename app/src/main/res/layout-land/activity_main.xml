@@ -1,184 +1,2255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:background="@color/midnight_background"
+    android:orientation="horizontal">
 
-    <nl.dionsegijn.konfetti.xml.KonfettiView
-        android:id="@+id/main_konfetti_view"
-        android:layout_width="match_parent"
+    <!-- Persistent Left Sidebar Navigation -->
+    <LinearLayout
+        android:id="@+id/main_sidebar"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/midnight_surface_container"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        <!-- Title Block -->
         <LinearLayout
-            android:layout_width="550dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_paw"
+                app:tint="@color/midnight_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Amarok"
+                android:textColor="@color/midnight_primary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Sidebar Navigation Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="60dp"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                android:textSize="40sp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_dashboard"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="start|center_vertical"
+                android:text="Dashboard"
+                app:icon="@drawable/ic_paw"
+                app:iconPadding="12dp"
+                app:cornerRadius="8dp" />
 
-            <TextView
-                android:id="@+id/main_tv_moto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="0dp"
-                android:layout_marginStart="44dp"
-                android:text="@string/moto" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_files"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="start|center_vertical"
+                android:text="Hidden Files"
+                android:textColor="@color/midnight_on_surface_variant"
+                app:icon="@drawable/ic_folder"
+                app:iconTint="@color/midnight_on_surface_variant"
+                app:iconPadding="12dp"
+                app:cornerRadius="8dp" />
 
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_apps"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="start|center_vertical"
+                android:text="Hidden Apps"
+                android:textColor="@color/midnight_on_surface_variant"
+                app:icon="@drawable/ic_app"
+                app:iconTint="@color/midnight_on_surface_variant"
+                app:iconPadding="12dp"
+                app:cornerRadius="8dp" />
 
-                android:id="@+id/main_card_status"
-                style="@style/Widget.Material3.CardView.Elevated"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_scheduling"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="start|center_vertical"
+                android:text="Scheduling"
+                android:textColor="@color/midnight_on_surface_variant"
+                app:icon="@drawable/ic_settings"
+                app:iconTint="@color/midnight_on_surface_variant"
+                app:iconPadding="12dp"
+                app:cornerRadius="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_security"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="start|center_vertical"
+                android:text="Security"
+                android:textColor="@color/midnight_on_surface_variant"
+                app:icon="@drawable/lock_black_24dp"
+                app:iconTint="@color/midnight_on_surface_variant"
+                app:iconPadding="12dp"
+                app:cornerRadius="8dp" />
+
+        </LinearLayout>
+
+        <!-- Sidebar Footer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_lock_vault"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="35dp"
-                android:layout_marginTop="45dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_marginBottom="16dp"
+                android:text="Lock Vault"
+                app:backgroundTint="@color/midnight_secondary"
+                android:textColor="@color/midnight_on_secondary"
+                app:icon="@drawable/ic_paw"
+                app:iconTint="@color/midnight_on_secondary"
+                app:cornerRadius="8dp" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_settings"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:text="Settings"
+                android:textColor="@color/midnight_on_surface_variant"
+                app:icon="@drawable/ic_settings"
+                app:iconTint="@color/midnight_on_surface_variant"
+                app:cornerRadius="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Content Area (swaps views dynamically) -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- TopAppBar Header (Exactly as in HTML) -->
+        <RelativeLayout
+            android:id="@+id/main_top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/midnight_background"
+            android:paddingHorizontal="24dp">
+
+            <!-- Title & Menu Open Icon -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_alignParentStart="true">
+
+                <!-- Hidden menu button for layout parity -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/main_header_menu_btn"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_paw"
+                    app:tint="@color/midnight_primary" />
+
+                <TextView
+                    android:id="@+id/main_header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Dashboard"
+                    android:textColor="@color/midnight_on_surface"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Right Controls: Search, Notifications, Lock, Avatar -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true">
+
+                <!-- Search Input Bar -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/main_search_card"
+                    android:layout_width="200dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="16dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/midnight_surface_container"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="10dp">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_search"
+                            app:tint="@color/midnight_on_surface_variant" />
+
+                        <EditText
+                            android:id="@+id/main_et_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Search parameters..."
+                            android:imeOptions="actionSearch"
+                            android:singleLine="true"
+                            android:textColor="@color/midnight_on_surface"
+                            android:textColorHint="#50cac4cd"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Action Buttons -->
+                <ImageView
+                    android:id="@+id/main_btn_notifications"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/notifications_black_24dp"
+                    app:tint="@color/midnight_on_surface_variant"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <ImageView
+                    android:id="@+id/main_btn_lock_clock"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/lock_clock_fill0_wght400_grad0_opsz24"
+                    app:tint="@color/midnight_on_surface_variant"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Profile Avatar Box -->
+                <FrameLayout
+                    android:id="@+id/main_btn_profile"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_soft_square"
+                    android:backgroundTint="@color/midnight_secondary"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="2dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_wolf"
+                        app:tint="@color/midnight_on_secondary" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/midnight_outline_variant"
+            android:alpha="0.2" />
+
+        <!-- Viewport container -->
+        <FrameLayout
+            android:id="@+id/main_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <!-- Panel 1: Dashboard -->
+            <LinearLayout
+                android:id="@+id/panel_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/main_card_status"
+                    style="@style/Widget.Material3.CardView.Filled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/midnight_surface_container"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="35dp"
-                        android:layout_marginStart="35dp"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/main_tv_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/visible_status"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/main_tv_statusinfo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/visible_moto"
-                            android:textSize="11sp"
-                            android:textStyle="italic" />
+                        android:padding="24dp">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="35dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/main_bt_change_status"
-                                style="@style/Widget.Material3.Button.Icon"
+                            <TextView
+                                android:id="@+id/main_tv_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:onClick="changeStatus"
-                                android:text="@string/hide"
-                                app:icon="@drawable/ic_paw" />
+                                android:text="@string/visible_status"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="32sp"
+                                android:textStyle="bold" />
 
-                            <com.google.android.material.progressindicator.CircularProgressIndicator
-                                android:id="@+id/main_pi_process_status"
+                            <TextView
+                                android:id="@+id/main_tv_statusinfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="12dp"
-                                android:indeterminate="true"
-                                android:visibility="gone"
-                                app:indicatorSize="20dp" />
+                                android:layout_marginTop="4dp"
+                                android:text="@string/visible_moto"
+                                android:textColor="@color/midnight_on_surface_variant"
+                                android:textSize="12sp"
+                                android:textStyle="italic" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="32dp"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/main_bt_change_status"
+                                    style="@style/Widget.Material3.Button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:onClick="changeStatus"
+                                    android:text="@string/hide"
+                                    app:backgroundTint="@color/midnight_secondary"
+                                    android:textColor="@color/midnight_on_secondary"
+                                    app:iconTint="@color/midnight_on_secondary"
+                                    app:icon="@drawable/ic_paw"
+                                    app:cornerRadius="8dp" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/main_bt_reveal_all"
+                                    style="@style/Widget.Material3.Button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:visibility="gone"
+                                    android:text="Show All"
+                                    app:backgroundTint="@color/midnight_secondary"
+                                    android:textColor="@color/midnight_on_secondary"
+                                    app:iconTint="@color/midnight_on_secondary"
+                                    app:icon="@drawable/visibility_off_24dp"
+                                    app:cornerRadius="8dp" />
+
+                                <com.google.android.material.progressindicator.CircularProgressIndicator
+                                    android:id="@+id/main_pi_process_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="12dp"
+                                    android:indeterminate="true"
+                                    android:visibility="gone"
+                                    app:indicatorColor="@color/midnight_secondary"
+                                    app:indicatorSize="20dp" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
+                        <ImageView
+                            android:id="@+id/main_iv_status"
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"
+                            android:src="@drawable/img_status_hidden"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <nl.dionsegijn.konfetti.xml.KonfettiView
+                    android:id="@+id/main_konfetti_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <!-- Panel 2: Hidden Files -->
+            <LinearLayout
+                android:id="@+id/panel_files"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Batch actions button row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/hidefiles_btn_secure_all"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Secure All"
+                        app:icon="@drawable/lock_black_24dp"
+                        app:iconPadding="8dp"
+                        app:cornerRadius="8dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/hidefiles_btn_reveal_all"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Reveal All"
+                        app:icon="@drawable/visibility_off_24dp"
+                        app:iconPadding="8dp"
+                        app:cornerRadius="8dp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hidefiles_rv_filelist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <!-- Panel 3: Hidden Apps -->
+            <LinearLayout
+                android:id="@+id/panel_apps"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/hideapp_sr_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/hideapp_rv_applist"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            </LinearLayout>
+
+            <!-- Panel 4: Stealth Scheduling -->
+            <LinearLayout
+                android:id="@+id/panel_scheduling"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/stealth_rv_rules"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/stealth_fab_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="16dp"
+                        android:src="@drawable/ic_add"
+                        app:backgroundTint="@color/midnight_secondary"
+                        app:tint="@color/midnight_on_secondary" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!-- Panel 5: Security & Protocols (Mockup security_protocols_tablet) -->
+            <ScrollView
+                android:id="@+id/panel_security"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="40dp">
+
+                    <!-- Hero Stats Grid (2 rows of 2 cards each) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+
+                        <!-- Card 1: Vault Status -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/midnight_surface_container"
+                            app:cardCornerRadius="16dp"
+                            app:strokeWidth="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="VAULT STATUS"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/security_status_vault"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Hardened"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Last audit: 14m ago"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Card 2: Encryption -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/midnight_surface_container"
+                            app:cardCornerRadius="16dp"
+                            app:strokeWidth="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="ENCRYPTION"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="AES-256"
+                                    android:textColor="@color/midnight_primary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Quantum Resistant: On"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/main_iv_status"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_marginEnd="-55dp"
-                        android:src="@drawable/img_status_hidden"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="24dp">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <!-- Card 3: Intrusion Attempts -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/midnight_surface_container"
+                            app:cardCornerRadius="16dp"
+                            app:strokeWidth="0dp">
 
-            </com.google.android.material.card.MaterialCardView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_bt_set_hide_files"
-                style="@style/Widget.Material3.Button.TextButton.Icon"
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="INTRUSIONS"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="0 Attempts"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Past 30 days status"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Card 4: Emergency Status -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/midnight_surface_container"
+                            app:cardCornerRadius="16dp"
+                            app:strokeWidth="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="EMERGENCY"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Standby"
+                                    android:textColor="?attr/colorError"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Wipe ready"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="10sp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <!-- Authentication Modes -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Authentication Modes"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Multi-layered access control for the vault."
+                                android:textColor="@color/midnight_on_surface_variant"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="16dp" />
+
+                            <!-- Switch 1: Biometric -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Biometric Unlock"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Face ID &amp; Fingerprint validation"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/security_switch_biometric"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch 2: Secure PIN -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Secure PIN"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="6-digit alphanumeric passcode"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/security_switch_passcode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch 3: Calculator Disguise -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Calculator Disguise"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Mask vault as a working calculator decoy"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/security_switch_disguise"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch 4: Hide Amarok Icon -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Hide Amarok Launcher Icon"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Hide app icon from launcher drawer"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/security_switch_hide_icon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch 5: Invis-Pattern -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Invis-Pattern"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Hidden tactile touch path verification"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/security_switch_invis_pattern"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch 6: Duress Code -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Duress Code"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Wipe vault on entering emergency code"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/security_btn_configure_duress"
+                                    style="@style/Widget.Material3.Button.TonalButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="CONFIGURE"
+                                    app:cornerRadius="8dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Vault Hardening -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Vault Hardening"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="16dp" />
+
+                            <!-- Param 1 -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Obfuscation Intensity"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="High (Level 4)"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+                            <!-- Param 2 -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="KEY CYCLING"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="Every 24h"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="13sp" />
+
+                            </RelativeLayout>
+
+                            <!-- Param 3 -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="SALT LENGTH"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="128-bit"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="13sp" />
+
+                            </RelativeLayout>
+
+                            <!-- Param 4 -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="FS ENCRYPTION"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:text="XTS-Mode"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="13sp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Hider Selectors -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="24dp">
+
+                        <!-- App Hider selection card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/midnight_surface_container"
+                            app:cardCornerRadius="20dp"
+                            app:strokeWidth="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="20dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="App-Hiding Mode"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/security_tv_app_hider_info"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Current mode: Shizuku / Dhizuku"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/security_btn_change_app_hider"
+                                    style="@style/Widget.Material3.Button.TonalButton"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:text="CHANGE PROTOCOL"
+                                    app:cornerRadius="8dp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- File Hider selection card -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/midnight_surface_container"
+                            app:cardCornerRadius="20dp"
+                            app:strokeWidth="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="20dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="File-Hiding Mode"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/security_tv_file_hider_info"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:text="Current mode: Obfuscate"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/security_btn_change_file_hider"
+                                    style="@style/Widget.Material3.Button.TonalButton"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:text="CHANGE PROTOCOL"
+                                    app:cornerRadius="8dp" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <!-- Intruder Detection -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Intruder Detection"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="16dp" />
+
+                            <!-- Option 1 -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_toStartOf="@+id/security_badge_capture"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_marginEnd="16dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Stealth Capture"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Take photo on failed login attempt"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/security_badge_capture"
+                                    style="@style/Widget.Material3.Button.TextButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="ACTIVE"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+                            <!-- Option 2 -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_toStartOf="@+id/security_badge_attempt_log"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_marginEnd="16dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Attempt Log"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Record IP and Geo-location on failure"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/security_badge_attempt_log"
+                                    style="@style/Widget.Material3.Button.TextButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="DISABLED"
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="12sp" />
+
+                            </RelativeLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/security_btn_view_logs"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="VIEW SECURITY LOG"
+                                app:cornerRadius="8dp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Emergency Protocol -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Emergency Protocol"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="8dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="One-Tap Wipe"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="4dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Instantly purge all encrypted metadata and key headers. Irreversible process."
+                                android:textColor="@color/midnight_on_surface_variant"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="16dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/security_btn_arm_wipe"
+                                style="@style/Widget.Material3.Button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="ARM WIPE PROTOCOL"
+                                app:backgroundTint="?attr/colorError"
+                                android:textColor="@color/midnight_on_secondary"
+                                app:cornerRadius="8dp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Network Obfuscation -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Network Obfuscation"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="12dp" />
+
+                            <TextView
+                                android:id="@+id/security_tv_relay_node"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Current exit node: ARCTIC-4"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="14sp"
+                                android:layout_marginBottom="4dp" />
+
+                            <TextView
+                                android:id="@+id/security_tv_mesh_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="MESH TUNNEL ACTIVE\nHops: 7 Nodes | Ping: 42ms"
+                                android:textColor="@color/midnight_secondary"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="16dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/security_btn_change_relay"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="CHANGE RELAY"
+                                app:cornerRadius="8dp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Key Store Monitoring -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Key Store Monitoring"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="16dp" />
+
+                            <!-- HSM Row -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_toStartOf="@+id/security_status_hsm">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Hardware Root Key"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="ST-X2 CHIP ENCLAVE"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/security_status_hsm"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="OPTIMAL"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+                            <!-- Seed Storage Row -->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_toStartOf="@+id/security_status_seed">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Secondary Seed Storage"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="EXTERNAL VOL-01"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/security_status_seed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="CONNECTED"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="12dp"
+                                android:text="Need to back up your master recovery key?"
+                                android:textColor="@color/midnight_on_surface_variant"
+                                android:textSize="12sp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/security_btn_backup_qr"
+                                style="@style/Widget.Material3.Button.TonalButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="GENERATE QR BACKUP"
+                                app:cornerRadius="8dp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <!-- Panel 6: Settings & Privacy (Mockup privacy_dashboard_tablet) -->
+            <ScrollView
+                android:id="@+id/panel_settings"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="35dp"
-                android:allowClickWhenDisabled="true"
-                android:gravity="start|center_vertical"
-                android:onClick="setHideFile"
-                android:text="@string/set_hide_files"
-                app:icon="@drawable/ic_folder"
-                app:iconPadding="15dp"
-                tools:targetApi="s" />
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/main_bt_set_hide_apps"
-                style="@style/Widget.Material3.Button.TextButton.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="8dp"
-                android:allowClickWhenDisabled="true"
-                android:gravity="start|center_vertical"
-                android:onClick="setHideApps"
-                android:text="@string/set_hide_apps"
-                app:icon="@drawable/ic_app"
-                app:iconPadding="15dp"
-                tools:targetApi="s" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="40dp">
 
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.TextButton.Icon"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="42dp"
-                android:gravity="start|center_vertical"
-                android:onClick="showMoreSettings"
-                android:text="@string/more_settings"
-                app:icon="@drawable/ic_settings"
-                app:iconPadding="15dp" />
+                    <!-- Health Hero section -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="24dp"
+                        app:strokeWidth="0dp">
 
-        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="24dp">
 
-    </ScrollView>
+                            <!-- Circular dial -->
+                            <FrameLayout
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/bg_soft_square"
+                                android:backgroundTint="#16d4bbff"
+                                android:layout_marginEnd="20dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="94%"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="28sp"
+                                    android:textStyle="bold" />
 
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Privacy Health Optimised"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Your Amarok instance is currently secure and operating under active automation schedulers."
+                                    android:textColor="@color/midnight_on_surface_variant"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Bento Settings grid -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="App Preferences"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="16dp" />
+
+                            <!-- Switch: Live status -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Live status"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Show persistent notifications when vault is exposed"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/settings_switch_live_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch: Block screenshots -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Block Screenshots"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Prevent screenshots of vault contents"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/settings_switch_block_screenshots"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch: Hide recents -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Hide from Recents"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Exclude Amarok from Android app recents deck"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/settings_switch_hide_recents"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch: Disable security when unhidden -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginBottom="16dp">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Exposed Lock Bypass"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Bypass passcode verification if vault is visible"
+                                        android:textColor="@color/midnight_on_surface_variant"
+                                        android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/settings_switch_disable_security_unhidden"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!-- Switch: Disable toasts -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Silence Toast Alerts"
+                                        android:textColor="@color/midnight_on_surface"
+                                        android:textSize="14sp" />
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Do not display snackbar/toast alerts on hide action"
+                                         android:textColor="@color/midnight_on_surface_variant"
+                                         android:textSize="11sp" />
+
+                                </LinearLayout>
+
+                                <com.google.android.material.materialswitch.MaterialSwitch
+                                    android:id="@+id/settings_switch_disable_toasts"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Panic Button & Auto Lock Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="vertical"
+                             android:padding="20dp">
+
+                             <TextView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="Panic Button &amp; Auto-Lock"
+                                 android:textColor="@color/midnight_on_surface"
+                                 android:textSize="16sp"
+                                 android:textStyle="bold"
+                                 android:layout_marginBottom="16dp" />
+
+                             <!-- Panic Button -->
+                             <LinearLayout
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="horizontal"
+                                 android:gravity="center_vertical"
+                                 android:layout_marginBottom="16dp">
+
+                                 <LinearLayout
+                                     android:layout_width="0dp"
+                                     android:layout_height="wrap_content"
+                                     android:layout_weight="1"
+                                     android:orientation="vertical">
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Panic Button Overlay"
+                                         android:textColor="@color/midnight_on_surface"
+                                         android:textSize="14sp" />
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Show floating panic overlay button"
+                                         android:textColor="@color/midnight_on_surface_variant"
+                                         android:textSize="11sp" />
+
+                                 </LinearLayout>
+
+                                 <com.google.android.material.materialswitch.MaterialSwitch
+                                     android:id="@+id/settings_switch_enable_panic_button"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content" />
+
+                             </LinearLayout>
+
+                             <!-- Panic Button Color -->
+                             <LinearLayout
+                                 android:id="@+id/settings_layout_panic_color"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="horizontal"
+                                 android:gravity="center_vertical"
+                                 android:layout_marginBottom="16dp">
+
+                                 <LinearLayout
+                                     android:layout_width="0dp"
+                                     android:layout_height="wrap_content"
+                                     android:layout_weight="1"
+                                     android:orientation="vertical">
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Panic Button Color"
+                                         android:textColor="@color/midnight_on_surface"
+                                         android:textSize="14sp" />
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Customize floating panic button color"
+                                         android:textColor="@color/midnight_on_surface_variant"
+                                         android:textSize="11sp" />
+
+                                 </LinearLayout>
+
+                                 <com.google.android.material.button.MaterialButton
+                                     android:id="@+id/settings_btn_panic_button_color"
+                                     style="@style/Widget.Material3.Button.TonalButton"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:text="PICK COLOR"
+                                     app:cornerRadius="8dp" />
+
+                             </LinearLayout>
+
+                             <!-- Auto Hide switch -->
+                             <LinearLayout
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="horizontal"
+                                 android:gravity="center_vertical"
+                                 android:layout_marginBottom="16dp">
+
+                                 <LinearLayout
+                                     android:layout_width="0dp"
+                                     android:layout_height="wrap_content"
+                                     android:layout_weight="1"
+                                     android:orientation="vertical">
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Lock on Screen Off"
+                                         android:textColor="@color/midnight_on_surface"
+                                         android:textSize="14sp" />
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Auto lock vault when device screen turns off"
+                                         android:textColor="@color/midnight_on_surface_variant"
+                                         android:textSize="11sp" />
+
+                                 </LinearLayout>
+
+                                 <com.google.android.material.materialswitch.MaterialSwitch
+                                     android:id="@+id/settings_switch_enable_auto_hide"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content" />
+
+                             </LinearLayout>
+
+                             <!-- Auto Hide Delay seek bar -->
+                             <LinearLayout
+                                 android:id="@+id/settings_layout_auto_hide_delay"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="vertical">
+
+                                 <TextView
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:text="Auto Lock Delay"
+                                     android:textColor="@color/midnight_on_surface"
+                                     android:textSize="14sp" />
+
+                                 <TextView
+                                     android:id="@+id/settings_tv_auto_hide_delay_summary"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:text="Delay before auto lock: 5 seconds"
+                                     android:textColor="@color/midnight_on_surface_variant"
+                                     android:textSize="11sp"
+                                     android:layout_marginBottom="8dp" />
+
+                                 <com.google.android.material.slider.Slider
+                                     android:id="@+id/settings_slider_auto_hide_delay"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="wrap_content"
+                                     android:valueFrom="0.0"
+                                     android:valueTo="30.0"
+                                     android:stepSize="1.0" />
+
+                             </LinearLayout>
+
+                         </LinearLayout>
+
+                     </com.google.android.material.card.MaterialCardView>
+
+                     <!-- Xposed Integration Card -->
+                     <com.google.android.material.card.MaterialCardView
+                         android:id="@+id/settings_card_xposed"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginBottom="24dp"
+                         app:cardBackgroundColor="@color/midnight_surface_container"
+                         app:cardCornerRadius="20dp"
+                         app:strokeWidth="0dp">
+
+                         <LinearLayout
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="vertical"
+                             android:padding="20dp">
+
+                             <TextView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="Xposed Framework Integration"
+                                 android:textColor="@color/midnight_on_surface"
+                                 android:textSize="16sp"
+                                 android:textStyle="bold"
+                                 android:layout_marginBottom="16dp" />
+
+                             <!-- Xposed status text -->
+                             <TextView
+                                 android:id="@+id/settings_tv_xposed_status"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="Status: Xposed inactive"
+                                 android:textColor="@color/midnight_on_surface_variant"
+                                 android:textSize="12sp"
+                                 android:layout_marginBottom="16dp" />
+
+                             <!-- Switch: Enable XHide -->
+                             <LinearLayout
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="horizontal"
+                                 android:gravity="center_vertical"
+                                 android:layout_marginBottom="16dp">
+
+                                 <LinearLayout
+                                     android:layout_width="0dp"
+                                     android:layout_height="wrap_content"
+                                     android:layout_weight="1"
+                                     android:orientation="vertical">
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Enable Xposed Hiding"
+                                         android:textColor="@color/midnight_on_surface"
+                                         android:textSize="14sp" />
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Direct integration with Android system server via hooks"
+                                         android:textColor="@color/midnight_on_surface_variant"
+                                         android:textSize="11sp" />
+
+                                 </LinearLayout>
+
+                                 <com.google.android.material.materialswitch.MaterialSwitch
+                                     android:id="@+id/settings_switch_enable_x_hide"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content" />
+
+                             </LinearLayout>
+
+                             <!-- Switch: Skip hide step -->
+                             <LinearLayout
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="horizontal"
+                                 android:gravity="center_vertical">
+
+                                 <LinearLayout
+                                     android:layout_width="0dp"
+                                     android:layout_height="wrap_content"
+                                     android:layout_weight="1"
+                                     android:orientation="vertical">
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Direct Obfuscation Locking"
+                                         android:textColor="@color/midnight_on_surface"
+                                         android:textSize="14sp" />
+
+                                     <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:text="Bypass secondary hide steps under Xposed"
+                                         android:textColor="@color/midnight_on_surface_variant"
+                                         android:textSize="11sp" />
+
+                                 </LinearLayout>
+
+                                 <com.google.android.material.materialswitch.MaterialSwitch
+                                     android:id="@+id/settings_switch_disable_only_with_xhide"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content" />
+
+                             </LinearLayout>
+
+                         </LinearLayout>
+
+                     </com.google.android.material.card.MaterialCardView>
+
+                     <!-- Table of operations -->
+                     <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/midnight_surface_container"
+                        app:cardCornerRadius="20dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Recent Stealth Operations"
+                                android:textColor="@color/midnight_on_surface"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginBottom="16dp" />
+
+                            <!-- Row 1 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:paddingVertical="12dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Filename Obfuscation"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="SUCCESS"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/midnight_outline_variant"
+                                android:alpha="0.2" />
+
+                            <!-- Row 2 -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:paddingVertical="12dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Package Suppression"
+                                    android:textColor="@color/midnight_on_surface"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="SUCCESS"
+                                    android:textColor="@color/midnight_secondary"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,33 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/hideapp_ll_pathitem"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:orientation="vertical">
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/midnight_surface_container"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="1dp"
+    app:strokeWidth="0dp">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/hidefile_tv_foldername"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/hideapp_ll_pathitem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="15dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Folder Name"
-        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
 
+        <!-- Leading Icon (40dp soft-square container) -->
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_soft_square"
+            android:backgroundTint="#26d4bbff">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/hidefile_tv_path"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="15dp"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="/path/to/your/file"
-        android:textSize="11sp" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_folder"
+                app:tint="@color/midnight_primary" />
 
-</LinearLayout>
+        </FrameLayout>
+
+        <!-- Folder Info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/hidefile_tv_foldername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Folder Name"
+                android:textColor="@color/midnight_on_surface"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/hidefile_tv_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="/path/to/your/file"
+                android:textColor="@color/midnight_on_surface_variant"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <!-- Action Buttons (Visibility, Open Folder, Delete) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hidefile_btn_visibility"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
+                app:icon="@drawable/visibility_off_24dp"
+                app:iconTint="@color/midnight_on_surface_variant" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hidefile_btn_open"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
+                app:icon="@drawable/ic_open"
+                app:iconTint="@color/midnight_primary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hidefile_btn_delete"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:iconTint="?attr/colorError" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

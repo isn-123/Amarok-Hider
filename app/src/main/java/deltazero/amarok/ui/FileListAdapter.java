@@ -2,7 +2,11 @@ package deltazero.amarok.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Set;
@@ -57,10 +62,127 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (position < lsPath.size()) {
             String currPath = lsPath.get(position);
-            ((FileListHolder) holder).tvFolderName.setText(
+            FileListHolder fileHolder = (FileListHolder) holder;
+            
+            fileHolder.tvFolderName.setText(
                     currPath.substring(currPath.lastIndexOf(File.separator) + 1)
             );
-            ((FileListHolder) holder).tvPath.setText(currPath);
+            fileHolder.tvPath.setText(currPath);
+
+            // Check if folder is currently hidden in tracked state
+            boolean isFolderHidden = PrefMgr.getCurrentlyHiddenPaths().contains(currPath);
+            if (!isFolderHidden) {
+                // Exposed / Visible state: Show "Hide" eye action button and enable Open Folder
+                fileHolder.btnVisibility.setIconResource(R.drawable.visibility_off_24dp);
+                fileHolder.btnVisibility.setIconTint(context.getColorStateList(R.color.midnight_on_surface_variant));
+                fileHolder.btnOpen.setVisibility(View.VISIBLE);
+            } else {
+                // Locked / Hidden state: Show "Reveal" padlock action button and hide Open Folder
+                fileHolder.btnVisibility.setIconResource(R.drawable.lock_black_24dp);
+                fileHolder.btnVisibility.setIconTint(context.getColorStateList(R.color.midnight_primary));
+                fileHolder.btnOpen.setVisibility(View.GONE);
+            }
+
+            // Open Folder in system file manager
+            fileHolder.btnOpen.setOnClickListener(v -> {
+                File file = new File(currPath);
+                if (!file.exists()) {
+                    Toast.makeText(context, "Folder does not exist", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Bypass StrictMode file exposure death
+                try {
+                    java.lang.reflect.Method m = android.os.StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                    m.invoke(null);
+                } catch (Exception e) {
+                    Log.e("FileListAdapter", "Failed to disable StrictMode exposure check", e);
+                }
+
+                Uri uri = Uri.fromFile(file);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                // Try standard directory MIME type
+                intent.setDataAndType(uri, "vnd.android.document/directory");
+                try {
+                    context.startActivity(intent);
+                    return;
+                } catch (Exception e) {
+                    Log.d("FileListAdapter", "vnd.android.document/directory failed, trying resource/folder");
+                }
+
+                // Try legacy MIME type
+                intent.setDataAndType(uri, "resource/folder");
+                try {
+                    context.startActivity(intent);
+                    return;
+                } catch (Exception e) {
+                    Log.d("FileListAdapter", "resource/folder failed, trying generic folder");
+                }
+
+                // Try generic
+                intent.setDataAndType(uri, "*/*");
+                try {
+                    context.startActivity(intent);
+                } catch (Exception ex) {
+                    Toast.makeText(context, "No file manager found", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // Toggle visibility in background thread
+            fileHolder.btnVisibility.setOnClickListener(v -> {
+                boolean isHidden = PrefMgr.getCurrentlyHiddenPaths().contains(currPath);
+                new Thread(() -> {
+                    try {
+                        if (!isHidden) {
+                            PrefMgr.getFileHider(context).hide(Collections.singleton(currPath));
+                            new Handler(Looper.getMainLooper()).post(() -> {
+                                Set<String> currentlyHidden = PrefMgr.getCurrentlyHiddenPaths();
+                                currentlyHidden.add(currPath);
+                                PrefMgr.setCurrentlyHiddenPaths(currentlyHidden);
+                                notifyItemChanged(position);
+                                Toast.makeText(context, "Path hidden", Toast.LENGTH_SHORT).show();
+                            });
+                        } else {
+                            PrefMgr.getFileHider(context).unhide(Collections.singleton(currPath));
+                            new Handler(Looper.getMainLooper()).post(() -> {
+                                Set<String> currentlyHidden = PrefMgr.getCurrentlyHiddenPaths();
+                                currentlyHidden.remove(currPath);
+                                PrefMgr.setCurrentlyHiddenPaths(currentlyHidden);
+                                notifyItemChanged(position);
+                                Toast.makeText(context, "Path revealed", Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                    } catch (Exception e) {
+                        Log.e("FileListAdapter", "Visibility toggle failed", e);
+                        new Handler(Looper.getMainLooper()).post(() ->
+                                Toast.makeText(context, "Operation failed", Toast.LENGTH_SHORT).show()
+                        );
+                    }
+                }).start();
+            });
+
+            fileHolder.btnDelete.setOnClickListener(v -> {
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle(R.string.remove_hide_path)
+                        .setMessage(context.getString(R.string.remove_hide_path_description, currPath))
+                        .setPositiveButton(R.string.confirm, (dialog, which) -> {
+                            Set<String> hideFilePath = PrefMgr.getHideFilePath();
+                            hideFilePath.remove(currPath);
+                            PrefMgr.setHideFilePath(hideFilePath);
+
+                            // Clean from hidden paths state if deleted
+                            Set<String> currentlyHidden = PrefMgr.getCurrentlyHiddenPaths();
+                            currentlyHidden.remove(currPath);
+                            PrefMgr.setCurrentlyHiddenPaths(currentlyHidden);
+
+                            lsPath.remove(currPath);
+                            notifyItemRemoved(position);
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+            });
         }
     }
 
@@ -76,41 +198,20 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return TYPE_FILE_ITEM;
     }
 
-    public class FileListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class FileListHolder extends RecyclerView.ViewHolder {
 
         public MaterialTextView tvFolderName, tvPath;
         public LinearLayout llPathItem;
-        private final FileListAdapter adapter;
+        public MaterialButton btnVisibility, btnOpen, btnDelete;
 
         public FileListHolder(@NonNull View itemView, FileListAdapter adapter) {
             super(itemView);
-            this.adapter = adapter;
-
             tvFolderName = itemView.findViewById(R.id.hidefile_tv_foldername);
             tvPath = itemView.findViewById(R.id.hidefile_tv_path);
             llPathItem = itemView.findViewById(R.id.hideapp_ll_pathitem);
-
-            llPathItem.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            new MaterialAlertDialogBuilder(context)
-                    .setTitle(R.string.remove_hide_path)
-                    .setMessage(context.getString(R.string.remove_hide_path_description, tvPath.getText()))
-                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Set<String> hideFilePath = PrefMgr.getHideFilePath();
-                            hideFilePath.remove(lsPath.get(getLayoutPosition()));
-                            PrefMgr.setHideFilePath(hideFilePath);
-
-                            lsPath.remove(getLayoutPosition());
-                            adapter.notifyItemRemoved(getAdapterPosition());
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null)
-                    .show();
+            btnVisibility = itemView.findViewById(R.id.hidefile_btn_visibility);
+            btnOpen = itemView.findViewById(R.id.hidefile_btn_open);
+            btnDelete = itemView.findViewById(R.id.hidefile_btn_delete);
         }
     }
 
@@ -169,7 +270,7 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                 PrefMgr.setHideFilePath(hideFilePaths);
 
                                 lsPath.add(input);
-                                adapter.notifyItemInserted(getAdapterPosition());
+                                adapter.notifyItemInserted(lsPath.size() - 1);
                             })
                             .show();
                     return true;

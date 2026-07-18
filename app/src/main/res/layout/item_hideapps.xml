@@ -1,58 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/midnight_surface_container"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="1dp"
+    app:strokeWidth="0dp">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/hideapp_cb_ishidden"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp" />
+        android:padding="12dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_toStartOf="@id/hideapp_cb_ishidden"
-        android:layout_toEndOf="@id/hideapp_iv_appicon"
-        android:orientation="vertical">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/hideapp_tv_appname"
+        <!-- Checkbox on the right -->
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/hideapp_cb_ishidden"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="APP Name"
-            android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            app:buttonTint="@color/midnight_secondary" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/hideapp_tv_pkgname"
+        <!-- App Info (Center) -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="APP PkgName"
-            android:textSize="8sp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/hideapp_cb_ishidden"
+            android:layout_toEndOf="@id/hideapp_iv_appicon"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/hideapp_tv_appname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="APP Name"
+                android:textColor="@color/midnight_on_surface"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
-    <ImageView
-        android:id="@+id/hideapp_iv_appicon"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_null" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/hideapp_tv_pkgname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="APP PkgName"
+                android:textColor="@color/midnight_on_surface_variant"
+                android:textSize="11sp" />
 
-</RelativeLayout>
+        </LinearLayout>
+
+        <!-- App Icon on the left -->
+        <ImageView
+            android:id="@+id/hideapp_iv_appicon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_null" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

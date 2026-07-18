@@ -19,6 +19,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
 
     <queries>
         <intent>
@@ -86,6 +89,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.SetHideAppActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.StealthRulesActivity"
             android:exported="false" />
         <activity
             android:name=".ui.CalendarActivity"
@@ -186,6 +192,21 @@
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".receivers.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receivers.StealthSchedulerReceiver"
+            android:enabled="true"
+            android:exported="false" />
 
         <provider
             android:name="rikka.shizuku.ShizukuProvider"

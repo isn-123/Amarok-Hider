@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/midnight_background"
     tools:context=".ui.settings.SwitchFileHiderActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -17,207 +18,268 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="?attr/colorOnSurface"
-            app:title="@string/switch_file_hider" />
+            app:navigationIconTint="@color/midnight_on_surface"
+            app:title="@string/switch_file_hider"
+            app:titleTextColor="@color/midnight_on_surface" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="8dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <!-- None Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_filehider_radio_disabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckFileHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_filehider_radio_disabled"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/filehider_none" />
+                        android:onClick="onCheckFileHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/filehider_none_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filehider_none"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/filehider_none_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <!-- Obfuscate Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_filehider_radio_obfuscate"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="onCheckFileHiderRadioButton" />
+                    android:padding="12dp">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_filehider_radio_obfuscate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/filehider_obfuscate" />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="onCheckFileHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <!-- Settings Cog on the far right -->
+                    <ImageView
+                        android:id="@+id/switch_filehider_iv_obfuscate_settings"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_settings_2"
+                        app:tint="@color/midnight_primary" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/filehider_obfuscate_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toStartOf="@id/switch_filehider_iv_obfuscate_settings"
+                        android:layout_toEndOf="@id/switch_filehider_radio_obfuscate"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filehider_obfuscate"
+                            android:textColor="@color/midnight_on_surface" />
 
-                <ImageView
-                    android:id="@+id/switch_filehider_iv_obfuscate_settings"
-                    android:layout_width="64dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical|end"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:padding="20dp"
-                    android:src="@drawable/ic_settings_2"
-                    app:tint="?attr/colorOnSurface" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/filehider_obfuscate_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
 
-            </LinearLayout>
+                    </LinearLayout>
 
-            <LinearLayout
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Chmod Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_filehider_radio_chmod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckFileHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_filehider_radio_chmod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/filehider_chmod" />
+                        android:onClick="onCheckFileHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/filehider_chmod_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filehider_chmod"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/filehider_chmod_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <!-- NoMedia Hider Option Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/switch_filehider_radio_nomedia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="onCheckFileHiderRadioButton" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="6dp"
+                app:cardBackgroundColor="@color/midnight_surface_container"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
-                    <TextView
-                        style="@style/TextAppearance.Material3.TitleSmall"
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/switch_filehider_radio_nomedia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/filehider_nomedia" />
+                        android:onClick="onCheckFileHiderRadioButton"
+                        app:buttonTint="@color/midnight_secondary" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/filehider_nomedia_description"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextAppearance.Material3.TitleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/filehider_nomedia"
+                            android:textColor="@color/midnight_on_surface" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/filehider_nomedia_description"
+                            android:textColor="@color/midnight_on_surface_variant"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+            <!-- Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:layout_marginVertical="28dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="24dp"
                 android:gravity="end"
                 android:orientation="horizontal">
-
-
-                <!--                <com.google.android.material.button.MaterialButton-->
-                <!--                    android:id="@+id/switch_filehider_bt_learn_more"-->
-                <!--                    style="@style/Widget.Material3.Button.TextButton"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="@string/learn_more"-->
-                <!--                    app:icon="@drawable/ic_open" />-->
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/switch_filehider_bt_ok"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:onClick="onClickOKButton"
-                    android:text="@string/ok" />
+                    android:text="@string/ok"
+                    app:backgroundTint="@color/midnight_secondary"
+                    android:textColor="@color/midnight_on_secondary"
+                    app:cornerRadius="8dp" />
 
             </LinearLayout>
 

@@ -95,6 +95,7 @@ public class SettingsActivity extends AmarokActivity implements
                     new WorkmodeCategory(requireActivity(), screen),
                     new XHideCategory(requireActivity(), screen),
                     new PrivacyCategory(requireActivity(), screen),
+                    new SchedulingCategory(requireActivity(), screen),
                     new QuickHideCategory(requireActivity(), screen),
                     new AppearanceCategory(requireActivity(), screen),
                     new UpdateCategory(requireActivity(), screen),

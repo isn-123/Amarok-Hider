@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/midnight_surface"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/dialog_rule_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_rule"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:textColor="@color/midnight_on_surface"
+            android:textStyle="bold" />
+
+        <!-- Rule Name Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dialog_rule_til_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxStrokeColor="@color/midnight_secondary"
+            app:hintTextColor="@color/midnight_secondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dialog_rule_et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/rule_name"
+                android:inputType="textCapSentences"
+                android:textColor="@color/midnight_on_surface" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Time Picker Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/dialog_rule_layout_start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_time"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                    android:textColor="@color/midnight_on_surface_variant" />
+
+                <TextView
+                    android:id="@+id/dialog_rule_tv_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="08:00"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textColor="@color/midnight_on_surface"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dialog_rule_layout_end"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_time"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+                    android:textColor="@color/midnight_on_surface_variant" />
+
+                <TextView
+                    android:id="@+id/dialog_rule_tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="17:00"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textColor="@color/midnight_on_surface"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Weekdays Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/days_of_week"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            android:textColor="@color/midnight_on_surface_variant" />
+
+        <!-- Weekdays Grid -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/dialog_rule_cb_sun"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="3dp"
+                android:button="@null"
+                android:background="@drawable/bg_weekday_checkbox"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="S"
+                android:textAlignment="center"
+                android:textColor="@color/midnight_on_surface"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/dialog_rule_cb_mon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="3dp"
+                android:button="@null"
+                android:background="@drawable/bg_weekday_checkbox"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="M"
+                android:textAlignment="center"
+                android:textColor="@color/midnight_on_surface"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/dialog_rule_cb_tue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="3dp"
+                android:button="@null"
+                android:background="@drawable/bg_weekday_checkbox"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="T"
+                android:textAlignment="center"
+                android:textColor="@color/midnight_on_surface"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/dialog_rule_cb_wed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="3dp"
+                android:button="@null"
+                android:background="@drawable/bg_weekday_checkbox"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="W"
+                android:textAlignment="center"
+                android:textColor="@color/midnight_on_surface"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/dialog_rule_cb_thu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="3dp"
+                android:button="@null"
+                android:background="@drawable/bg_weekday_checkbox"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="T"
+                android:textAlignment="center"
+                android:textColor="@color/midnight_on_surface"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/dialog_rule_cb_fri"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="3dp"
+                android:button="@null"
+                android:background="@drawable/bg_weekday_checkbox"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="F"
+                android:textAlignment="center"
+                android:textColor="@color/midnight_on_surface"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/dialog_rule_cb_sat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="3dp"
+                android:button="@null"
+                android:background="@drawable/bg_weekday_checkbox"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="S"
+                android:textAlignment="center"
+                android:textColor="@color/midnight_on_surface"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dialog_rule_bt_delete"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_rule"
+                android:textColor="@color/midnight_secondary"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dialog_rule_bt_cancel"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textColor="@color/midnight_on_surface_variant" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/dialog_rule_bt_save"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/save_rule"
+                app:backgroundTint="@color/midnight_secondary"
+                app:rippleColor="@color/midnight_on_secondary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

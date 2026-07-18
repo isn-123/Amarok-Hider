@@ -101,3 +101,15 @@ Provides multiple triggers for instant hide/unhide operations:
 - **Auto Hide on Screen Off:** Implemented via `ScreenStatusReceiver.java` and `AutoHideUtil.java`
 - **Intent API:** Managed by `ActionReceiver.java`
 - **Widget:** `ToggleWidget.java`
+
+### 7. Stealth Scheduling
+
+Provides automated hide/unhide transitions based on user-defined daily/weekly schedules:
+
+- **Model:** `StealthRule.java` representing the schedule name, start/end time, active weekdays, and enable status.
+- **Rules Management:** `StealthRulesActivity.java` provides the UI to create, edit, delete, and toggle scheduling rules.
+- **Alarm Scheduling:** `StealthScheduler.java` calculates target times and registers RTC alarms with `AlarmManager`.
+- **Receiver:** `StealthSchedulerReceiver.java` catches scheduled alarms to run hide/unhide commands and reschedule alarms for the next cycle.
+- **Boot Recovery:** `BootReceiver.java` automatically restores all alarms after a device reboot.
+- **Preference Persistence:** Integrated inside `PrefMgr.getStealthRules()` / `PrefMgr.setStealthRules()` as serialized JSON string arrays.
+

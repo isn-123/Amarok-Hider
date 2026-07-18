@@ -91,6 +91,11 @@ public final class Hider {
 
                 PrefMgr.getAppHider(context).hide(PrefMgr.getHideApps(), disableOnly);
                 PrefMgr.getFileHider(context).hide(PrefMgr.getHideFilePath());
+
+                // Track currently hidden paths state
+                java.util.Set<String> hiddenPaths = PrefMgr.getCurrentlyHiddenPaths();
+                hiddenPaths.addAll(PrefMgr.getHideFilePath());
+                PrefMgr.setCurrentlyHiddenPaths(hiddenPaths);
             } catch (InterruptedException e) {
                 Log.w(TAG, "Process 'hide' interrupted.");
                 return;
@@ -130,6 +135,11 @@ public final class Hider {
             try {
                 PrefMgr.getAppHider(context).unhide(PrefMgr.getHideApps());
                 PrefMgr.getFileHider(context).unhide(PrefMgr.getHideFilePath());
+
+                // Clear hidden paths state
+                java.util.Set<String> hiddenPaths = PrefMgr.getCurrentlyHiddenPaths();
+                hiddenPaths.removeAll(PrefMgr.getHideFilePath());
+                PrefMgr.setCurrentlyHiddenPaths(hiddenPaths);
             } catch (InterruptedException e) {
                 Log.w(TAG, "Process 'unhide' interrupted.");
                 return;

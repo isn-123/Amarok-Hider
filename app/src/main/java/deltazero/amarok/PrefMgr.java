@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import deltazero.amarok.apphider.BaseAppHider;
 import deltazero.amarok.apphider.DhizukuAppHider;
@@ -78,6 +82,7 @@ public final class PrefMgr {
     public static final String PANIC_BUTTON_Y = "panicButtonY";
     public static final String PANIC_BUTTON_LEFT_EDGE = "panicButtonLeftEdge";
     public static final String DARK_THEME = "darkTheme";
+    public static final String CURRENTLY_HIDDEN_PATHS = "currentlyHiddenPaths";
 
     public static Set<String> getHideFilePath() {
         // Return a defensive copy to avoid SharedPreferences caching issues
@@ -86,6 +91,44 @@ public final class PrefMgr {
 
     public static void setHideFilePath(Set<String> path) {
         mPrefEditor.putStringSet(HIDE_FILE_PATH, path);
+        mPrefEditor.apply();
+    }
+
+    public static Set<String> getCurrentlyHiddenPaths() {
+        return new HashSet<>(mPrefs.getStringSet(CURRENTLY_HIDDEN_PATHS, new HashSet<>()));
+    }
+
+    public static void setCurrentlyHiddenPaths(Set<String> paths) {
+        mPrefEditor.putStringSet(CURRENTLY_HIDDEN_PATHS, paths);
+        mPrefEditor.apply();
+    }
+
+    public static List<StealthRule> getStealthRules() {
+        String jsonStr = mPrefs.getString("stealthRules", "[]");
+        List<StealthRule> rules = new ArrayList<>();
+        try {
+            JSONArray arr = new JSONArray(jsonStr);
+            for (int i = 0; i < arr.length(); i++) {
+                StealthRule rule = StealthRule.fromJsonObject(arr.getJSONObject(i));
+                if (rule != null) {
+                    rules.add(rule);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rules;
+    }
+
+    public static void setStealthRules(List<StealthRule> rules) {
+        JSONArray arr = new JSONArray();
+        for (StealthRule rule : rules) {
+            JSONObject obj = rule.toJsonObject();
+            if (obj != null) {
+                arr.put(obj);
+            }
+        }
+        mPrefEditor.putString("stealthRules", arr.toString());
         mPrefEditor.apply();
     }
 
@@ -417,5 +460,55 @@ public final class PrefMgr {
     public static void setDarkTheme(int mode) {
         mPrefEditor.putInt(DARK_THEME, mode);
         mPrefEditor.apply();
+    }
+
+    public static boolean getEnableInvisPattern() {
+        return mPrefs.getBoolean("enable_invis_pattern", false);
+    }
+
+    public static void setEnableInvisPattern(boolean enable) {
+        mPrefEditor.putBoolean("enable_invis_pattern", enable);
+        mPrefEditor.apply();
+    }
+
+    public static String getDuressPasscode() {
+        return mPrefs.getString("duress_passcode", null);
+    }
+
+    public static void setDuressPasscode(String code) {
+        mPrefEditor.putString("duress_passcode", code);
+        mPrefEditor.apply();
+    }
+
+    public static void executeWipe(Context context) {
+        Set<String> files = getHideFilePath();
+        for (String path : files) {
+            try {
+                java.io.File file = new java.io.File(path);
+                if (file.exists()) {
+                    if (file.isDirectory()) {
+                        deleteDirRecursively(file);
+                    } else {
+                        file.delete();
+                    }
+                }
+            } catch (Exception e) {
+                // Ignore
+            }
+        }
+        setHideFilePath(new HashSet<>());
+        setCurrentlyHiddenPaths(new HashSet<>());
+    }
+
+    private static void deleteDirRecursively(java.io.File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory()) {
+            java.io.File[] children = fileOrDirectory.listFiles();
+            if (children != null) {
+                for (java.io.File child : children) {
+                    deleteDirRecursively(child);
+                }
+            }
+        }
+        fileOrDirectory.delete();
     }
 }
