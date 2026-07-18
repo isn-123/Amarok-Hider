@@ -117,6 +117,10 @@ public class MainActivity extends AmarokActivity {
     private com.google.android.material.slider.Slider sliderAutoHideDelay;
     private TextView tvAutoHideDelaySummary, tvXposedStatus;
 
+    private MaterialSwitch switchSettingsDynamicColor, switchSettingsInvertTitleColor, switchSettingsAutoUpdate, switchSettingsAnalytics;
+    private MaterialButton btnSettingsDarkTheme, btnSettingsLanguage, btnSettingsCheckUpdate, btnSettingsUpdateChannel, btnSettingsForceUnhide, btnSettingsUsage, btnSettingsGithub, btnSettingsTelegram, btnSettingsParticipateTranslation;
+    private TextView tvSettingsDarkThemeSummary, tvSettingsVersionSummary, tvSettingsUpdateChannelSummary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,6 +224,23 @@ public class MainActivity extends AmarokActivity {
         sliderAutoHideDelay = findViewById(R.id.settings_slider_auto_hide_delay);
         tvAutoHideDelaySummary = findViewById(R.id.settings_tv_auto_hide_delay_summary);
         tvXposedStatus = findViewById(R.id.settings_tv_xposed_status);
+
+        switchSettingsDynamicColor = findViewById(R.id.settings_switch_dynamic_color);
+        switchSettingsInvertTitleColor = findViewById(R.id.settings_switch_invert_title_color);
+        switchSettingsAutoUpdate = findViewById(R.id.settings_switch_auto_update);
+        switchSettingsAnalytics = findViewById(R.id.settings_switch_analytics);
+        btnSettingsDarkTheme = findViewById(R.id.settings_btn_dark_theme);
+        btnSettingsLanguage = findViewById(R.id.settings_btn_language);
+        btnSettingsCheckUpdate = findViewById(R.id.settings_btn_check_update);
+        btnSettingsUpdateChannel = findViewById(R.id.settings_btn_update_channel);
+        btnSettingsForceUnhide = findViewById(R.id.settings_btn_force_unhide);
+        btnSettingsUsage = findViewById(R.id.settings_btn_usage);
+        btnSettingsGithub = findViewById(R.id.settings_btn_github);
+        btnSettingsTelegram = findViewById(R.id.settings_btn_telegram);
+        btnSettingsParticipateTranslation = findViewById(R.id.settings_btn_participate_translation);
+        tvSettingsDarkThemeSummary = findViewById(R.id.settings_tv_dark_theme_summary);
+        tvSettingsVersionSummary = findViewById(R.id.settings_tv_version_summary);
+        tvSettingsUpdateChannelSummary = findViewById(R.id.settings_tv_update_channel_summary);
     }
 
     private void setupSidebarNavigation() {
@@ -852,6 +873,150 @@ public class MainActivity extends AmarokActivity {
         switchSettingsDisableOnlyWithXHide.setChecked(PrefMgr.getDisableOnlyWithXHide());
         switchSettingsDisableOnlyWithXHide.setOnCheckedChangeListener((buttonView, isChecked) -> {
             PrefMgr.setDisableOnlyWithXHide(isChecked);
+        });
+
+        // Dynamic Color Theming
+        switchSettingsDynamicColor.setChecked(PrefMgr.getEnableDynamicColor());
+        switchSettingsDynamicColor.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            PrefMgr.setEnableDynamicColor(isChecked);
+            Toast.makeText(MainActivity.this, R.string.apply_on_restart, Toast.LENGTH_SHORT).show();
+        });
+
+        // Dark Theme Selector
+        final int[] NIGHT_MODES = {
+                androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM,
+                androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO,
+                androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+        };
+        final int[] DARK_THEME_LABELS = {
+                R.string.dark_theme_follow_system,
+                R.string.dark_theme_light,
+                R.string.dark_theme_dark
+        };
+        
+        int currentNightMode = PrefMgr.getDarkTheme();
+        int currentIdxTheme = 0;
+        for (int i = 0; i < NIGHT_MODES.length; i++) {
+            if (NIGHT_MODES[i] == currentNightMode) {
+                currentIdxTheme = i;
+                break;
+            }
+        }
+        tvSettingsDarkThemeSummary.setText(DARK_THEME_LABELS[currentIdxTheme]);
+
+        btnSettingsDarkTheme.setOnClickListener(v -> {
+            String[] options = new String[NIGHT_MODES.length];
+            for (int i = 0; i < DARK_THEME_LABELS.length; i++)
+                options[i] = getString(DARK_THEME_LABELS[i]);
+
+            int initialSelect = 0;
+            int modeVal = PrefMgr.getDarkTheme();
+            for (int i = 0; i < NIGHT_MODES.length; i++) {
+                if (NIGHT_MODES[i] == modeVal) {
+                    initialSelect = i;
+                    break;
+                }
+            }
+
+            new com.google.android.material.dialog.MaterialAlertDialogBuilder(MainActivity.this)
+                    .setTitle(R.string.dark_theme)
+                    .setSingleChoiceItems(options, initialSelect, (dialog, which) -> {
+                        int selectedMode = NIGHT_MODES[which];
+                        PrefMgr.setDarkTheme(selectedMode);
+                        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(selectedMode);
+                        tvSettingsDarkThemeSummary.setText(DARK_THEME_LABELS[which]);
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton(R.string.cancel, null)
+                    .show();
+        });
+
+        // Language Selector
+        btnSettingsLanguage.setOnClickListener(v -> {
+            deltazero.amarok.utils.SwitchLocaleUtil.switchLocale(MainActivity.this);
+        });
+
+        // Invert Title Color
+        switchSettingsInvertTitleColor.setChecked(PrefMgr.getInvertTileColor());
+        switchSettingsInvertTitleColor.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            PrefMgr.setInvertTileColor(isChecked);
+            Toast.makeText(MainActivity.this, R.string.apply_on_restart, Toast.LENGTH_SHORT).show();
+        });
+
+        // Participate Translation Portal
+        btnSettingsParticipateTranslation.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://hosted.weblate.org/engage/amarok-hider/")));
+        });
+
+        // System Version and Check Update
+        String appVersionName = "0.10.1";
+        try {
+            appVersionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (Exception ignore) {}
+        tvSettingsVersionSummary.setText(getString(R.string.check_update_description, appVersionName));
+
+        btnSettingsCheckUpdate.setOnClickListener(v -> {
+            deltazero.amarok.utils.UpdateUtil.checkAndNotify(MainActivity.this, false);
+        });
+
+        // Release Channel Selection
+        String currentChannel = PrefMgr.getPrefs().getString(PrefMgr.UPDATE_CHANNEL, deltazero.amarok.utils.UpdateUtil.UpdateChannel.RELEASE.name());
+        tvSettingsUpdateChannelSummary.setText("Channel: " + (currentChannel.equals("RELEASE") ? "Stable releases" : "Beta channel"));
+
+        btnSettingsUpdateChannel.setOnClickListener(v -> {
+            String[] channels = {"Stable releases", "Beta channel"};
+            String activeChannel = PrefMgr.getPrefs().getString(PrefMgr.UPDATE_CHANNEL, deltazero.amarok.utils.UpdateUtil.UpdateChannel.RELEASE.name());
+            int channelSelect = activeChannel.equals("RELEASE") ? 0 : 1;
+
+            new com.google.android.material.dialog.MaterialAlertDialogBuilder(MainActivity.this)
+                    .setTitle(R.string.update_channel)
+                    .setSingleChoiceItems(channels, channelSelect, (dialog, which) -> {
+                        String newChannel = (which == 0) ? deltazero.amarok.utils.UpdateUtil.UpdateChannel.RELEASE.name() : deltazero.amarok.utils.UpdateUtil.UpdateChannel.BETA.name();
+                        PrefMgr.getPrefs().edit().putString(PrefMgr.UPDATE_CHANNEL, newChannel).apply();
+                        tvSettingsUpdateChannelSummary.setText("Channel: " + channels[which]);
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton(R.string.cancel, null)
+                    .show();
+        });
+
+        // Auto check updates on startup
+        switchSettingsAutoUpdate.setChecked(PrefMgr.getPrefs().getBoolean(PrefMgr.IS_ENABLE_AUTO_UPDATE, true));
+        switchSettingsAutoUpdate.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            PrefMgr.getPrefs().edit().putBoolean(PrefMgr.IS_ENABLE_AUTO_UPDATE, isChecked).apply();
+        });
+
+        // Anonymous Diagnostics
+        switchSettingsAnalytics.setEnabled(deltazero.amarok.utils.AppCenterUtil.isAvailable());
+        switchSettingsAnalytics.setChecked(deltazero.amarok.utils.AppCenterUtil.isAvailable() && deltazero.amarok.utils.AppCenterUtil.isAnalyticsEnabled());
+        switchSettingsAnalytics.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            deltazero.amarok.utils.AppCenterUtil.setAnalyticsEnabled(isChecked);
+            Toast.makeText(MainActivity.this, R.string.apply_on_restart, Toast.LENGTH_SHORT).show();
+        });
+
+        // Force Recovery Restore (Force Unhide)
+        btnSettingsForceUnhide.setOnClickListener(v -> {
+            new com.google.android.material.dialog.MaterialAlertDialogBuilder(MainActivity.this)
+                    .setTitle(R.string.force_unhide)
+                    .setMessage(R.string.force_unhide_confirm_msg)
+                    .setPositiveButton(R.string.confirm, (dialog, which) -> {
+                        Hider.forceUnhide(MainActivity.this);
+                        Toast.makeText(MainActivity.this, R.string.performing_force_unhide, Toast.LENGTH_LONG).show();
+                        finish();
+                    })
+                    .setNegativeButton(R.string.cancel, null)
+                    .show();
+        });
+
+        // Community and documentation links
+        btnSettingsUsage.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.doc_url))));
+        });
+        btnSettingsGithub.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/deltazefiro/Amarok-Hider")));
+        });
+        btnSettingsTelegram.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/amarok_dev")));
         });
     }
 
