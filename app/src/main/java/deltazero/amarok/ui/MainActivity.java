@@ -584,6 +584,7 @@ public class MainActivity extends AmarokActivity {
         // Biometrics
         switchSecurityBiometric.setChecked(PrefMgr.getEnableAmarokBiometricAuth());
         switchSecurityBiometric.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setEnableAmarokBiometricAuth(isChecked);
             Toast.makeText(this, isChecked ? "Biometrics enabled" : "Biometrics disabled", Toast.LENGTH_SHORT).show();
         });
@@ -614,28 +615,35 @@ public class MainActivity extends AmarokActivity {
             }
         });
 
-        // Decoy Calculator Disguise
+        // Decoy Calendar Disguise (Calculator Decoy in layout label)
         switchSecurityDisguise.setChecked(PrefMgr.getEnableDisguise());
         switchSecurityDisguise.setEnabled(!PrefMgr.getHideAmarokIcon());
         switchSecurityDisguise.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
+            PrefMgr.setEnableDisguise(isChecked);
             PrefMgr.setDoShowQuitDisguiseInstuct(true);
             if (isChecked) {
                 SecurityUtil.lockAndDisguise();
             }
             LauncherIconController.setIconState(MainActivity.this,
                     isChecked ? LauncherIconController.IconState.DISGUISED : LauncherIconController.IconState.VISIBLE);
-            Toast.makeText(MainActivity.this, isChecked ? "Calculator decoy activated" : "Decoy deactivated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, isChecked ? "Decoy activated" : "Decoy deactivated", Toast.LENGTH_SHORT).show();
         });
 
         // Hide App Icon
         switchSecurityHideIcon.setChecked(PrefMgr.getHideAmarokIcon());
         switchSecurityHideIcon.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             if (isChecked) {
+                // Temporarily revert the visual switch state until confirm
+                switchSecurityHideIcon.setChecked(false);
                 new CountdownConfirmDialog.Builder(MainActivity.this)
                         .setTitle(R.string.hide_amarok_icon_dialog_title)
                         .setMessage(R.string.hide_amarok_icon_dialog_message)
                         .setCountdownSeconds(10)
                         .setOnConfirmAction(() -> {
+                            PrefMgr.setEnableDisguise(false);
+                            PrefMgr.setHideAmarokIcon(true);
                             switchSecurityDisguise.setChecked(false);
                             switchSecurityDisguise.setEnabled(false);
                             LauncherIconController.setIconState(MainActivity.this, LauncherIconController.IconState.HIDDEN);
@@ -646,6 +654,7 @@ public class MainActivity extends AmarokActivity {
                         })
                         .show();
             } else {
+                PrefMgr.setHideAmarokIcon(false);
                 switchSecurityDisguise.setEnabled(true);
                 LauncherIconController.setIconState(MainActivity.this, LauncherIconController.IconState.VISIBLE);
             }
@@ -654,6 +663,7 @@ public class MainActivity extends AmarokActivity {
         // Invis-Pattern
         switchSecurityInvisPattern.setChecked(PrefMgr.getEnableInvisPattern());
         switchSecurityInvisPattern.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setEnableInvisPattern(isChecked);
             Toast.makeText(this, isChecked ? "Invis-Pattern enabled" : "Invis-Pattern disabled", Toast.LENGTH_SHORT).show();
         });
@@ -752,6 +762,7 @@ public class MainActivity extends AmarokActivity {
         // Live status notification
         switchSettingsLiveStatus.setChecked(PrefMgr.getEnableQuickHideService());
         switchSettingsLiveStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setEnableQuickHideService(isChecked);
             if (isChecked) {
                 QuickHideService.startService(this);
@@ -763,6 +774,7 @@ public class MainActivity extends AmarokActivity {
         // Block screenshots
         switchSettingsBlockScreenshots.setChecked(PrefMgr.getBlockScreenshots());
         switchSettingsBlockScreenshots.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setBlockScreenshots(isChecked);
             if (isChecked) {
                 getWindow().setFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE,
@@ -775,24 +787,28 @@ public class MainActivity extends AmarokActivity {
         // Hide from recents
         switchSettingsHideRecents.setChecked(PrefMgr.getHideFromRecents());
         switchSettingsHideRecents.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setHideFromRecents(isChecked);
         });
 
         // Disable security when unhidden
         switchSettingsDisableSecurityUnhidden.setChecked(PrefMgr.getDisableSecurityWhenUnhidden());
         switchSettingsDisableSecurityUnhidden.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setDisableSecurityWhenUnhidden(isChecked);
         });
 
         // Disable toasts
         switchSettingsDisableToasts.setChecked(PrefMgr.getDisableToasts());
         switchSettingsDisableToasts.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setDisableToasts(isChecked);
         });
 
         // Panic Button Overlay
         switchSettingsEnablePanicButton.setChecked(PrefMgr.getEnablePanicButton());
         switchSettingsEnablePanicButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             if (isChecked) {
                 PermissionUtil.requestSystemAlertPermission(MainActivity.this, new com.hjq.permissions.OnPermissionCallback() {
                     @Override
@@ -840,6 +856,7 @@ public class MainActivity extends AmarokActivity {
         // Auto Lock switch
         switchSettingsEnableAutoHide.setChecked(PrefMgr.getEnableAutoHide());
         switchSettingsEnableAutoHide.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setEnableAutoHide(isChecked);
         });
 
@@ -866,18 +883,21 @@ public class MainActivity extends AmarokActivity {
 
         switchSettingsEnableXHide.setChecked(PrefMgr.isXHideEnabled());
         switchSettingsEnableXHide.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.getPrefs().edit().putBoolean(PrefMgr.ENABLE_X_HIDE, isChecked).apply();
             switchSettingsDisableOnlyWithXHide.setEnabled(isChecked);
         });
 
         switchSettingsDisableOnlyWithXHide.setChecked(PrefMgr.getDisableOnlyWithXHide());
         switchSettingsDisableOnlyWithXHide.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setDisableOnlyWithXHide(isChecked);
         });
 
         // Dynamic Color Theming
         switchSettingsDynamicColor.setChecked(PrefMgr.getEnableDynamicColor());
         switchSettingsDynamicColor.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setEnableDynamicColor(isChecked);
             Toast.makeText(MainActivity.this, R.string.apply_on_restart, Toast.LENGTH_SHORT).show();
         });
@@ -939,6 +959,7 @@ public class MainActivity extends AmarokActivity {
         // Invert Title Color
         switchSettingsInvertTitleColor.setChecked(PrefMgr.getInvertTileColor());
         switchSettingsInvertTitleColor.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.setInvertTileColor(isChecked);
             Toast.makeText(MainActivity.this, R.string.apply_on_restart, Toast.LENGTH_SHORT).show();
         });
@@ -983,6 +1004,7 @@ public class MainActivity extends AmarokActivity {
         // Auto check updates on startup
         switchSettingsAutoUpdate.setChecked(PrefMgr.getPrefs().getBoolean(PrefMgr.IS_ENABLE_AUTO_UPDATE, true));
         switchSettingsAutoUpdate.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             PrefMgr.getPrefs().edit().putBoolean(PrefMgr.IS_ENABLE_AUTO_UPDATE, isChecked).apply();
         });
 
@@ -990,6 +1012,7 @@ public class MainActivity extends AmarokActivity {
         switchSettingsAnalytics.setEnabled(deltazero.amarok.utils.AppCenterUtil.isAvailable());
         switchSettingsAnalytics.setChecked(deltazero.amarok.utils.AppCenterUtil.isAvailable() && deltazero.amarok.utils.AppCenterUtil.isAnalyticsEnabled());
         switchSettingsAnalytics.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!buttonView.isPressed()) return;
             deltazero.amarok.utils.AppCenterUtil.setAnalyticsEnabled(isChecked);
             Toast.makeText(MainActivity.this, R.string.apply_on_restart, Toast.LENGTH_SHORT).show();
         });
